@@ -1,11 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { message } from 'antd';
+import { CONTENT_API_KEY } from '../utils';
 // import storageModule from 'store2';
 // import { STORE_NAME } from '../utils';
 
 export class Http {
     httpClient: AxiosInstance = axios.create({
-        baseURL: 'https://mocky.io/v2',
+        baseURL: 'https://jerrynavi.me',
         responseType: 'json',
     });
 
@@ -13,10 +14,10 @@ export class Http {
         this.httpClient.defaults.headers.post['Content-Type'] = 'application/json';
 
         this.httpClient.interceptors.request.use(async (config) => {
-            /*
-                Learn more about interceptors here: https://github.com/axios/axios
-                The below example adds a saved token to request authorization header
-            */
+
+            config.params = {
+                key: CONTENT_API_KEY,
+            };
 
             // const store = await storageModule.get(STORE_NAME);
             // if (store) {
@@ -53,7 +54,7 @@ export class Http {
      */
     public get = (path: string, params?: any): Promise<any> => {
         return this.httpClient.get(path, {
-            params
+            params,
         });
     }
 
@@ -62,7 +63,7 @@ export class Http {
      */
     public post = (path: string, data: any, params?: any): Promise<any> => {
         return this.httpClient.post(path, data, {
-            params
+            params,
         });
     }
 
@@ -71,7 +72,7 @@ export class Http {
      */
     public put = (path: string, data: any, params?: any): Promise<any> => {
         return this.httpClient.put(path, data, {
-            params
+            params,
         });
     }
 }
